@@ -1,0 +1,41 @@
+[base]
+name=CentOS-$releasever - Base
+{% if baserepo is defined and baserepo != '' %}
+baseurl={{ baserepo }}
+{% else %}
+mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=os&infra=$infra
+{% endif %}
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+{% if proxyserver is defined and proxyserver != '' and proxyport is defined and baserepo == '' %}
+proxy=http://{{ proxyserver }}:{{proxyport}}
+{% endif %}
+
+#released updates
+[updates]
+name=CentOS-$releasever - Updates
+{% if updatesrepo is defined and updatesrepo != '' %}
+baseurl={{ updatesrepo }}
+{% else %}
+mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=updates&infra=$infra
+{% endif %}
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+{% if proxyserver is defined and proxyserver != '' and proxyport is defined and updatesrepo == '' %}
+proxy=http://{{ proxyserver }}:{{proxyport}}
+{% endif %}
+
+#additional packages that may be useful
+[extras]
+name=CentOS-$releasever - Extras
+{% if extrasrepo is defined and extrasrepo != '' %}
+baseurl={{ extrasrepo }}
+{% else %}
+mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=extras&infra=$infra
+{% endif %}
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+{% if proxyserver is defined and proxyserver != '' and proxyport is defined and extrasrepo == '' %}
+proxy=http://{{ proxyserver }}:{{proxyport}}
+{% endif %}
+

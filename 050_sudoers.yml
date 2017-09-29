@@ -1,0 +1,13 @@
+---
+
+- hosts: ELKstack_servers
+  sudo: true
+
+  tasks:
+  - name: Set sudoers file
+    lineinfile:
+      dest: /etc/sudoers
+      line: "{{ item }}"
+      state: present
+      validate: "visudo -cf %s"
+    with_items: "{{ sudoers }}"

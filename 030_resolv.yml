@@ -1,0 +1,24 @@
+---
+
+- hosts: ELKstack_servers_IP
+  sudo: true
+
+  tasks:
+  - name: Set Network Manager config file
+    lineinfile:
+      dest: /etc/NetworkManager/NetworkManager.conf
+      regexp: '^dns=none'
+      insertafter: '^\[main]'
+      line: 'dns=none'
+    notify: restart-NetworkManager
+
+  roles:
+    - ahuffman.resolv
+
+# Handler to restart service
+  handlers:
+  - name: restart-NetworkManager
+    systemd:
+      name: NetworkManager
+      state: restarted
+      daemon_reload: yes

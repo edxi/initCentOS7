@@ -1,0 +1,40 @@
+---
+
+- hosts: ELKstack_servers_IP
+  sudo: true
+
+# Task setup local repositories
+  tasks:
+  - name: Remove repository (and clean up left-over metadata)
+    yum_repository:
+      name: packages
+      state: absent
+    notify: yum-clean-metadata
+
+  - name: Add yumserver repository
+    template: "src=yumserver.repo dest=/etc/yum.repos.d/yumserver.repo owner=root group=root mode=0644"
+
+  - name: Add epel repository with proxy
+    yum_repository:
+      name: epel
+      description: EPEL YUM repo
+      proxy: "http://{{ proxyserver }}:{{ proxyport }}"
+      baseurl: http://mirrors.aliyun.com/epel/7/$basearch
+      failovermethod: priority
+      gpgcheck: no
+    when: proxyserver != ''
+  - name: Add epel repository without proxy
+    yum_repository:
+      name: epel
+      description: EPEL YUM repo
+      baseurl: http://mirrors.aliyun.com/epel/7/$basearch
+      failovermethod: priority
+      gpgcheck: no
+    when: proxyserver == ''
+
+# Handler clean yum metadata cache
+  handlers:
+  - name: yum-clean-metadata
+    command: yum clean metadata
+    args:
+      warn: no
