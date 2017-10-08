@@ -1,10 +1,3 @@
----
-
-- hosts: ELKstack_servers_IP
-  sudo: true
-
-# Task setup local repositories
-  tasks:
   - name: Remove repository (and clean up left-over metadata)
     yum_repository:
       name: packages
@@ -32,9 +25,3 @@
       gpgcheck: no
     when: proxyserver == ''
 
-# Handler clean yum metadata cache
-  handlers:
-  - name: yum-clean-metadata
-    command: yum clean metadata
-    args:
-      warn: no

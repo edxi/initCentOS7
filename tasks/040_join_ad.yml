@@ -1,17 +1,3 @@
----
-
-- hosts: ELKstack_servers_IP
-  sudo: true
-
-  vars_prompt:
-    - name: "adminuser"
-      prompt: "Enter AD Admin User Name"
-      private: no
-    - name: "ad_password"
-      prompt: "Enter AD Domain User Password"
-      private: yes
-
-  tasks:
   - name: install software for join AD
     yum: pkg={{item}} state=present disable_gpg_check=yes
     with_items:
@@ -74,6 +60,3 @@
     notify:
       - restart sssd
 
-  handlers:
-    - name: restart sssd
-      systemd: name=sssd state=restarted daemon_reload=yes

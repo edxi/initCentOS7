@@ -1,0 +1,17 @@
+---
+proxyserver: ''
+proxyport: 8080
+baserepo: ''
+extrasrepo: ''
+updatesrepo: ''
+# must set following vars for join domain
+#domainname: example.com
+#computerou: "OU=Computers,DC=example,DC=com"
+#sudoers:
+#  - "%examplegroup ALL=(ALL) ALL"
+#  - "exampleuser ALL=(ALL) NOPASSWORD: ALL"
+ntpserver:
+  - "0.centos.pool.ntp.org"
+  - "1.centos.pool.ntp.org"
+  - "2.centos.pool.ntp.org"
+  - "3.centos.pool.ntp.org"

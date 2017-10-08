@@ -1,9 +1,3 @@
----
-
-- hosts: ELKstack_servers
-  sudo: true
-
-  tasks:
   - name: Set sudoers file
     lineinfile:
       dest: /etc/sudoers

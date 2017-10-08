@@ -1,0 +1,17 @@
+---
+- name: publish auth key
+  include: 010_auth_key.yml
+  when: ansible_user is defined and ansible_user != ''
+- name: setup yum repo
+  include: 020_yum_repo.yml
+  tags: yum_repo
+- name: config resolv.conf
+  include: 030_resolv.yml
+- name: join ad
+  include: 040_join_ad.yml
+  when: domainame is defined and computerou is defined and adminuser is defined and ad_password
+- name: apply sudoers
+  include: 050_sudoers.yml
+  when: sudoers is defined
+- name: setup ntp client
+  include: 060_chrony.yml

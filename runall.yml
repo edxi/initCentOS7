@@ -1,7 +1,0 @@
----
-- import_playbook: 010_auth_key.yml
-- import_playbook: 020_yum_repo.yml
-- import_playbook: 030_resolv.yml
-- import_playbook: 040_join_ad.yml
-- import_playbook: 050_sudoers.yml
-- import_playbook: 060_chrony.yml

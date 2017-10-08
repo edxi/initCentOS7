@@ -1,0 +1,28 @@
+# Handler clean yum metadata cache
+  - name: yum-clean-metadata
+    command: yum clean metadata
+    args:
+      warn: no
+# Handler to restart NetworkManager service
+  - name: restart-NetworkManager
+    systemd:
+      name: NetworkManager
+      state: restarted
+      daemon_reload: yes
+
+  - name: restart sssd
+    systemd: name=sssd state=restarted daemon_reload=yes
+# Handler to reset ntp client
+  - name: remove all server lines in chrony.conf
+    replace:
+      path: /etc/chrony.conf
+      regexp: '(\s+)server(\s+.*)$'
+  - name: add ntp server lines in chrony.conf
+    lineinfile:
+      path: /etc/chrony.conf
+      line: "server {{ item }}"
+      state: present
+    with_items: "{{ ntpserver }}"
+  - name: enable and restart chronyd service
+    systemd: name=chronyd state=restarted daemon_reload=yes enabled=yes
+

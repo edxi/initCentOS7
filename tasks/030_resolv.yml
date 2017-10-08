@@ -1,0 +1,9 @@
+  - name: Set Network Manager config file
+    lineinfile:
+      dest: /etc/NetworkManager/NetworkManager.conf
+      regexp: '^dns=none'
+      insertafter: '^\[main]'
+      line: 'dns=none'
+    notify: restart-NetworkManager
+
+
